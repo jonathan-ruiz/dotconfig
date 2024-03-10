@@ -24,16 +24,8 @@ cd dotconfig
 
 Here's a brief overview of what you'll find in this repository:
 
-- **[Configurations](#configurations)**: A list of configuration files included in this repository and their purposes.
 - **[Installation](#installation)**: Instructions on how to install and use these configurations on your system.
 - **[Contributing](#contributing)**: Information on how to contribute to this repository.
-
-## Configurations
-
-This repository includes configurations for the following:
-
-- [Example Config 1](example-config-1): Description of the first example configuration file.
-- [Example Config 2](example-config-2): Description of the second example configuration file.
 
 ## Installation
 
