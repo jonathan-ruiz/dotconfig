@@ -54,4 +54,8 @@ This repository is licensed under the MIT License, which means you are free to u
 
 ## Acknowledgements
 
-Special thanks to Name for their inspiration or assistance in creating these configurations.
+Special thanks to:
+
+- https://github.com/adi1090x/polybar-themes
+- https://github.com/romkatv/powerlevel10k
+
