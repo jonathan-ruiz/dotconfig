@@ -3,7 +3,7 @@
 Welcome to my dotconfig repository! This repository contains configuration files \(dotfiles\) for various programs and tools that I use on a daily basis. Feel free to explore, fork, or use these configurations as inspiration for your own setup.
 
 This configuration is based on: 
-- https://github.com/adi1090x/polybar-themes?tab=readme-ov-file
+- https://github.com/adi1090x/polybar-themes
 - https://github.com/romkatv/powerlevel10k
 
 ## Getting Started
@@ -39,9 +39,18 @@ This repository includes configurations for the following:
 
 To install these configurations on your system, follow these steps:
 
-1. Backup your existing configuration files, if necessary.
-2. Copy the desired configuration files from this repository to their respective locations on your system.
-3. Restart or reload the relevant programs or services to apply the new configurations.
+1. Run the `provisioning.sh` script to install necessary packages and dependencies:
+
+```bash
+./provisioning.sh
+```
+
+2. Run the `install.sh` script to sync dotfiles to your home directory:
+
+```bash
+./install.sh
+```
+
 
 ## Contributing
 
