@@ -6,6 +6,8 @@ This configuration is based on:
 - https://github.com/adi1090x/polybar-themes
 - https://github.com/romkatv/powerlevel10k
 
+and is intended just for Arch/pacman based OS
+
 ## Getting Started
 
 To get started, clone this repository to your local machine:
