@@ -20,13 +20,6 @@ Then, navigate to the directory where you cloned the repository:
 cd dotconfig
 ```
 
-## Contents
-
-Here's a brief overview of what you'll find in this repository:
-
-- **[Installation](#installation)**: Instructions on how to install and use these configurations on your system.
-- **[Contributing](#contributing)**: Information on how to contribute to this repository.
-
 ## Installation
 
 To install these configurations on your system, follow these steps:
