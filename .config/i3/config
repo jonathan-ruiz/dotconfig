@@ -43,9 +43,9 @@ bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOU
 
 # use these keys for focus, movement, and resize directions when reaching for
 # the arrows is not convenient
-set $up l
-set $down k
-set $right semicolon
+#set $up l
+#set $down k
+#set $right semicolon
 
 # use Mouse+Mod4 to drag floating windows to their wanted position
 floating_modifier Mod4
@@ -128,6 +128,13 @@ bindsym Mod4+minus scratchpad show
 # Hide polybar
 bindsym Mod4+p exec polybar-msg cmd toggle
 
+# Screenshot
+bindsym Print exec flameshot gui -c
+bindsym Mod4+Print exec flameshot gui
+
+# Lock screen
+bindsym Mod4+l exec ~/.config/i3/i3lock-i.sh ~/.config/i3/images/keyhole.jpg
+ 
 # Define names for default workspaces for which we configure key bindings later on.
 # We use variables to avoid repeating the names in multiple places.
 set $ws1 "1"
