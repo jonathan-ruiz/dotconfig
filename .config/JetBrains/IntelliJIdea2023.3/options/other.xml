@@ -1,0 +1,205 @@
+<application>
+  <component name="GradleJvmSupportMatrix">
+    <option name="compatibility">
+      <list>
+        <VersionMapping>
+          <option name="gradleVersionInfo" value="INF-5.0" />
+          <option name="javaVersionInfo" value="6-8" />
+        </VersionMapping>
+        <VersionMapping>
+          <option name="gradleVersionInfo" value="INF-INF" />
+          <option name="javaVersionInfo" value="8-9" />
+        </VersionMapping>
+        <VersionMapping>
+          <option name="gradleVersionInfo" value="4.3-INF" />
+          <option name="javaVersionInfo" value="9-10" />
+        </VersionMapping>
+        <VersionMapping>
+          <option name="gradleVersionInfo" value="4.7-INF" />
+          <option name="javaVersionInfo" value="10-11" />
+        </VersionMapping>
+        <VersionMapping>
+          <option name="gradleVersionInfo" value="5.0-INF" />
+          <option name="javaVersionInfo" value="11-12" />
+        </VersionMapping>
+        <VersionMapping>
+          <option name="gradleVersionInfo" value="5.4-INF" />
+          <option name="javaVersionInfo" value="12-13" />
+        </VersionMapping>
+        <VersionMapping>
+          <option name="gradleVersionInfo" value="6.0-INF" />
+          <option name="javaVersionInfo" value="13-14" />
+        </VersionMapping>
+        <VersionMapping>
+          <option name="gradleVersionInfo" value="6.3-INF" />
+          <option name="javaVersionInfo" value="14-15" />
+        </VersionMapping>
+        <VersionMapping>
+          <option name="gradleVersionInfo" value="6.7-INF" />
+          <option name="javaVersionInfo" value="15-16" />
+        </VersionMapping>
+        <VersionMapping>
+          <option name="gradleVersionInfo" value="7.0-INF" />
+          <option name="javaVersionInfo" value="16-17" />
+        </VersionMapping>
+        <VersionMapping>
+          <option name="gradleVersionInfo" value="7.2-INF" />
+          <option name="javaVersionInfo" value="17-18" />
+        </VersionMapping>
+        <VersionMapping>
+          <option name="gradleVersionInfo" value="7.5-INF" />
+          <option name="javaVersionInfo" value="18-19" />
+        </VersionMapping>
+        <VersionMapping>
+          <option name="gradleVersionInfo" value="7.6-INF" />
+          <option name="javaVersionInfo" value="19-20" />
+        </VersionMapping>
+        <VersionMapping>
+          <option name="gradleVersionInfo" value="8.3-INF" />
+          <option name="javaVersionInfo" value="20-21" />
+        </VersionMapping>
+        <VersionMapping>
+          <option name="gradleVersionInfo" value="8.5-INF" />
+          <option name="javaVersionInfo" value="21-22" />
+        </VersionMapping>
+      </list>
+    </option>
+    <option name="default" value="false" />
+    <option name="ideVersion" value="2023.3.4" />
+    <option name="lastUpdateTime" value="1710090255598" />
+    <option name="supportedGradleVersions">
+      <list>
+        <option value="3.0" />
+        <option value="3.1" />
+        <option value="3.2" />
+        <option value="3.3" />
+        <option value="3.4" />
+        <option value="3.5" />
+        <option value="4.0" />
+        <option value="4.1" />
+        <option value="4.2" />
+        <option value="4.3" />
+        <option value="4.4" />
+        <option value="4.5" />
+        <option value="4.5.1" />
+        <option value="4.6" />
+        <option value="4.7" />
+        <option value="4.8" />
+        <option value="4.9" />
+        <option value="4.10" />
+        <option value="4.10.3" />
+        <option value="5.0" />
+        <option value="5.1" />
+        <option value="5.2" />
+        <option value="5.3" />
+        <option value="5.3.1" />
+        <option value="5.4" />
+        <option value="5.4.1" />
+        <option value="5.5" />
+        <option value="5.5.1" />
+        <option value="5.6" />
+        <option value="5.6.2" />
+        <option value="6.0" />
+        <option value="6.0.1" />
+        <option value="6.1" />
+        <option value="6.2" />
+        <option value="6.3" />
+        <option value="6.4" />
+        <option value="6.5" />
+        <option value="6.6" />
+        <option value="6.7" />
+        <option value="6.8" />
+        <option value="6.8.3" />
+        <option value="6.9" />
+        <option value="7.0" />
+        <option value="7.1" />
+        <option value="7.2" />
+        <option value="7.3" />
+        <option value="7.4" />
+        <option value="7.5" />
+        <option value="7.5.1" />
+        <option value="7.6" />
+        <option value="8.0" />
+        <option value="8.1" />
+        <option value="8.2" />
+        <option value="8.3" />
+        <option value="8.4" />
+        <option value="8.5" />
+        <option value="8.6" />
+      </list>
+    </option>
+    <option name="supportedJavaVersions">
+      <list>
+        <option value="8" />
+        <option value="9" />
+        <option value="10" />
+        <option value="11" />
+        <option value="12" />
+        <option value="13" />
+        <option value="14" />
+        <option value="15" />
+        <option value="16" />
+        <option value="17" />
+        <option value="18" />
+        <option value="19" />
+        <option value="20" />
+        <option value="21" />
+      </list>
+    </option>
+  </component>
+  <component name="NotRoamableUiSettings">
+    <option name="presentationModeIdeScale" value="1.75" />
+  </component>
+  <component name="PropertyService"><![CDATA[{
+  "keyToString": {
+    "LAST_CALCULATED_COLOR_INDEX_KEY": "0",
+    "ai.assistant.toolwindow.shown.at.start": "true",
+    "ask.about.ctrl.y.shortcut.v2": "true",
+    "bundled.plugins.list.saved.version": "IU-233.14475.28",
+    "enter_selection_count": "1",
+    "evlsprt3.233": "4",
+    "experimental.ui.on.first.startup": "true",
+    "experimental.ui.used.version": "233.14475.28",
+    "file.gist.reindex.count": "379",
+    "fileTypeChangedCounter": "1",
+    "fontSizeToResetConsole": "13.0",
+    "fontSizeToResetEditor": "13.0",
+    "got.it.tooltip.speed.search.shown": "1",
+    "gotit.previous.run": "IU-233.14475.28",
+    "ide.memory.adjusted": "true",
+    "input.method.disabler.muted": "true",
+    "installed.kotlin.plugin.version": "233.14475.28-IJ",
+    "js.live.template.contexts.migrated": "true",
+    "last_opened_file_path": "/home/jruiz/Projects/Personal/work-curriculum",
+    "migrated.non.roamable.values.from.general.settings": "true",
+    "previousColorScheme": "_@user_Dark",
+    "registry.to.advanced.settings.migration.build": "IU-233.14475.28",
+    "tab_selection_count": "1",
+    "ts.lib.d.ts.version": "5.2.2"
+  },
+  "keyToStringList": {
+    "file.chooser.recent.files": [
+      "/home/jruiz/Projects/Personal/work-curriculum"
+    ],
+    "fileTypeDetectors": [
+      "com.intellij.ide.scratch.ScratchFileServiceImpl$Detector",
+      "com.intellij.docker.dockerFile.DockerFileTypeDetector",
+      "com.intellij.profiler.ultimate.hprof.impl.HprofFileTypeDetector",
+      "com.intellij.javascript.debugger.sourcemap.SourceMapFileType$MyFileTypeDetector",
+      "com.intellij.database.vfs.DbStorageFileType$Detector",
+      "com.jetbrains.nodejs.util.NodeFileTypeDetector$JavaScriptFileTypeDetector",
+      "com.jetbrains.nodejs.util.NodeFileTypeDetector$TypeScriptFileTypeDetector",
+      "org.jetbrains.plugins.textmate.TextMateFileType$TextMateFileDetector"
+    ]
+  }
+}]]></component>
+  <component name="ShownTips"><![CDATA[{
+  "shownTips": {
+    "CommentCode": 1710091859761
+  },
+  "proposedTips": {
+    "CommentCode": 1710091859650
+  },
+  "tipsOrderSeed": 1710091859623
+}]]></component>
+</application>

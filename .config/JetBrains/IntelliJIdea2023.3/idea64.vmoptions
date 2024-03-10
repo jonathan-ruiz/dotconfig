@@ -1,4 +1,4 @@
--Xmx1981m
+-Xmx2048m
 -Dide.managed.by.toolbox=/home/jruiz/.local/share/JetBrains/Toolbox/bin/jetbrains-toolbox
 -Dtoolbox.notification.token=8724bb63-e3db-4fe6-8568-3d29499a16f8
 -Dtoolbox.notification.portFile=/home/jruiz/.cache/JetBrains/Toolbox/ports/1595992334.port

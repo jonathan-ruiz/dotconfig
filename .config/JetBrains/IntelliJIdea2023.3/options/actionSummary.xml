@@ -1,0 +1,82 @@
+<application>
+  <component name="ActionsLocalSummary">
+    <e n="$Redo">
+      <i c="1" l="1710092536111" />
+    </e>
+    <e n="$Undo">
+      <i c="8" l="1710092538811" />
+    </e>
+    <e n="EditorBackSpace">
+      <i c="25" l="1710093103290" />
+    </e>
+    <e n="EditorChooseLookupItem">
+      <i c="1" l="1710092255735" />
+    </e>
+    <e n="EditorChooseLookupItemReplace">
+      <i c="1" l="1710091995703" />
+    </e>
+    <e n="EditorCopy">
+      <i c="3" l="1710092600730" />
+    </e>
+    <e n="EditorCut">
+      <i c="1" l="1710092187424" />
+    </e>
+    <e n="EditorDelete">
+      <i c="3" l="1710092190660" />
+    </e>
+    <e n="EditorDown">
+      <i c="31" l="1710092054255" />
+    </e>
+    <e n="EditorEnter">
+      <i c="4" l="1710092239935" />
+    </e>
+    <e n="EditorEscape">
+      <i c="1" l="1710092802239" />
+    </e>
+    <e n="EditorLeft">
+      <i c="88" l="1710092520056" />
+    </e>
+    <e n="EditorLeftWithSelection">
+      <i c="7" l="1710092186621" />
+    </e>
+    <e n="EditorPaste">
+      <i c="4" l="1710092613932" />
+    </e>
+    <e n="EditorRight">
+      <i c="32" l="1710093102290" />
+    </e>
+    <e n="EditorUp">
+      <i c="2" l="1710092241500" />
+    </e>
+    <e n="Find">
+      <i c="1" l="1710092588916" />
+    </e>
+    <e n="GotoDeclaration">
+      <i c="1" l="1710092079532" />
+    </e>
+    <e n="SaveAll">
+      <i c="7" l="1710093105269" />
+    </e>
+    <e n="ShowIntentionActions">
+      <i c="1" l="1710092216561" />
+    </e>
+    <e n="SpeedSearch">
+      <i c="1" l="1710092582103" />
+    </e>
+    <e n="Switcher">
+      <i c="6" l="1710092601455" />
+    </e>
+    <e n="WelcomeScreen.OpenProject">
+      <i c="1" l="1710090128685" />
+    </e>
+    <e n="com.intellij.openapi.actionSystem.ex.ActionUtil$InputEventDummyAction">
+      <i c="6" l="1710092601557" />
+    </e>
+    <e n="com.intellij.openapi.wm.impl.SquareAnActionButton">
+      <i c="2" l="1710090848878" />
+    </e>
+    <e n="com.intellij.toolWindow.ToolWindowHeader$HideAction">
+      <i c="1" l="1710090279905" />
+    </e>
+  </component>
+</application>

@@ -29,6 +29,7 @@ fi
 echo -e "\e[1;32m\nInstalling necessary packages...\e[0m"
 sudo pacman -Sy --noconfirm \
     rsync \
+    lsd \
     xorg-xdpyinfo \
     redshift \
     rofi \
