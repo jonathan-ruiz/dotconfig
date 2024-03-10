@@ -11,7 +11,7 @@ This configuration is based on:
 To get started, clone this repository to your local machine:
 
 ```bash
-git clone <repository-url>
+git clone git@github.com:jonathan-ruiz/dotconfig.git 
 ```
 
 Then, navigate to the directory where you cloned the repository:
