@@ -1,5 +1,32 @@
 #!/bin/bash
 
+# Function to install Firefox
+install_extra() {
+    echo -e "\e[1;32m\nInstalling extra...\e[0m"
+    packages=("firefox" "gimp" "blender" "virtualbox" "neovim")
+
+    for pkg in "${packages[@]}"; do
+        if pacman -Q "$pkg" &>/dev/null; then
+            echo "$pkg is already installed."
+        else
+            sudo pacman -Sy --noconfirm "$pkg"
+            if [ $? -ne 0 ]; then
+                echo -e "\e[1;31mError: Failed to install $pkg.\e[0m"
+                exit 1
+            fi
+        fi
+    done
+
+    # Aur
+    echo -e "\e[1;32m\nInstalling AUR packages...\e[0m"
+    git clone --branch jetbrains-toolbox --single-branch https://github.com/archlinux/aur.git || { echo -e "\e[1;31mError: Failed to clone AUR repository.\e[0m"; exit 1; }
+    cd aur || { echo -e "\e[1;31mError: AUR directory not found.\e[0m"; exit 1; }
+    makepkg || { echo -e "\e[1;31mError: Failed to build AUR package.\e[0m"; exit 1; }
+    sudo pacman -U --noconfirm jetbrains-toolbox*.xz || { echo -e "\e[1;31mError: Failed to install AUR package.\e[0m"; exit 1; }
+    cd .. || { echo -e "\e[1;31mError: Failed to change directory.\e[0m"; exit 1; }
+    rm -rf aur || { echo -e "\e[1;31mError: Failed to remove AUR directory.\e[0m"; exit 1; }
+}
+
 # ASCII art and instructions
 echo -e "\e[1;34m"
 cat << "EOF"
@@ -68,6 +95,14 @@ sudo pacman -R --noconfirm zsh-theme-powerlevel10k
 yay -S --noconfirm zsh-theme-powerlevel10k-git
 echo 'source /usr/share/zsh-theme-powerlevel10k/powerlevel10k.zsh-theme' >> ~/.zshrc
 echo -e "\e[1;32mPowerlevel10k installed and configured.\e[0m"
+
+# Prompt user if they want to install browsing-related packages
+read -p "Do you want to install extra packages? (y/n): " choice
+case "$choice" in 
+  y|Y ) install_extra;;
+  n|N ) echo -e "\e[1;32m\nNo extra packages will be installed.\e[0m";;
+  * ) echo -e "\e[1;31mInvalid choice. No extra packages will be installed.\e[0m";;
+esac
 
 echo -e "\e[1;32m\nPackages installed successfully!\e[0m"
 exit 0
