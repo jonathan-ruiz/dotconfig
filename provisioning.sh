@@ -17,16 +17,34 @@ install_extra() {
         fi
     done
 
-    # Aur
-    echo -e "\e[1;32m\nInstalling AUR packages...\e[0m"
-    git clone --branch jetbrains-toolbox --single-branch https://github.com/archlinux/aur.git || { echo -e "\e[1;31mError: Failed to clone AUR repository.\e[0m"; exit 1; }
-    cd aur || { echo -e "\e[1;31mError: AUR directory not found.\e[0m"; exit 1; }
-    makepkg || { echo -e "\e[1;31mError: Failed to build AUR package.\e[0m"; exit 1; }
-    sudo pacman -U --noconfirm jetbrains-toolbox*.xz || { echo -e "\e[1;31mError: Failed to install AUR package.\e[0m"; exit 1; }
-    cd .. || { echo -e "\e[1;31mError: Failed to change directory.\e[0m"; exit 1; }
-    rm -rf aur || { echo -e "\e[1;31mError: Failed to remove AUR directory.\e[0m"; exit 1; }
+    # Install jetbrains-toolbox
+    install_aur_package "jetbrains-toolbox"
+
+    # Install unityhub
+    install_aur_package "unityhub"
+
 }
 
+# Function to clean up temporary directories
+cleanup() {
+    if [ -d "$temp_dir" ]; then
+        rm -rf "$temp_dir"
+        echo -e "\e[1;33mCleanup: Temporary directory '$temp_dir' removed.\e[0m"
+    fi
+}
+
+# Function to install AUR packages
+install_aur_package() {
+    local package_name="$1"
+    local temp_dir="$(mktemp -d)"
+    echo -e "\e[1;32m\nInstalling $package_name AUR package...\e[0m"
+    trap cleanup EXIT
+    git clone "https://aur.archlinux.org/$package_name.git" "$temp_dir" || { echo -e "\e[1;31mError: Failed to clone AUR repository for $package_name.\e[0m"; exit 1; }
+    cd "$temp_dir" || { echo -e "\e[1;31mError: AUR directory for $package_name not found.\e[0m"; exit 1; }
+    makepkg -s -r -c || { echo -e "\e[1;31mError: Failed to build AUR package for $package_name.\e[0m"; exit 1; }
+    sudo pacman -U --noconfirm "$package_name"*.tar.xz || { echo -e "\e[1;31mError: Failed to install AUR package $package_name.\e[0m"; exit 1; }
+    echo -e "\e[1;32mInstallation of $package_name completed successfully.\e[0m"
+}
 # ASCII art and instructions
 echo -e "\e[1;34m"
 cat << "EOF"
