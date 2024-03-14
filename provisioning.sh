@@ -3,7 +3,7 @@
 # Function to install Firefox
 install_extra() {
     echo -e "\e[1;32m\nInstalling extra...\e[0m"
-    packages=("firefox" "gimp" "blender" "virtualbox" "neovim")
+    packages=("firefox" "gimp" "blender" "virtualbox" "neovim" "obs-studio")
 
     for pkg in "${packages[@]}"; do
         if pacman -Q "$pkg" &>/dev/null; then
@@ -83,6 +83,10 @@ fi
 # Install required packages
 echo -e "\e[1;32m\nInstalling necessary packages...\e[0m"
 sudo pacman -Sy --noconfirm \
+    pulseaudio \
+    pasystray \
+    pavucontrol \
+    pulseaudio-bluetooth \
     rsync \
     lsd \
     xorg-xdpyinfo \
@@ -99,7 +103,8 @@ sudo pacman -Sy --noconfirm \
     alsa-utils \
     acpi \
     upower \
-    ttf-nerd-fonts-symbols-mono
+    ttf-nerd-fonts-symbols-mono 
+    
 
 # Check if installation was successful
 if [ $? -ne 0 ]; then
