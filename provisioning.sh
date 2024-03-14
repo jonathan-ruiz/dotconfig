@@ -25,6 +25,16 @@ if ! command -v pacman &> /dev/null; then
     exit 1
 fi
 
+# Manjaro - Remove conflicting packages
+if pacman -Qi i3status-manjaro &> /dev/null; then
+    echo -e "\e[1;32m\nRemoving conflicting package: i3status-manjaro...\e[0m"
+    sudo pacman -Rns --noconfirm i3status-manjaro manjaro-i3-settings
+fi
+if pacman -Qi manjaro-zsh-config &> /dev/null; then
+    echo -e "\e[1;32m\nRemoving conflicting package: manjaro-zsh-config...\e[0m"
+    sudo pacman -Rns --noconfirm manjaro-zsh-config 
+fi
+
 # Install required packages
 echo -e "\e[1;32m\nInstalling necessary packages...\e[0m"
 sudo pacman -Sy --noconfirm \
