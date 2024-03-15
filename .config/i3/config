@@ -203,32 +203,15 @@ mode "resize" {
         bindsym Escape mode "default"
         bindsym Mod4+r mode "default"
 }
-
 bindsym Mod4+r mode "resize"
-
-# Start i3bar to display a workspace bar (plus the system information i3status
-# finds out, if available)
-#bar {
-#        status_command i3status
-#}
-
-#######################################################################
-# automatically start i3-config-wizard to offer the user to create a
-# keysym-based config which used their favorite modifier (alt or windows)
-#
-# i3-config-wizard will not launch if there already is a config file
-# in ~/.config/i3/config (or $XDG_CONFIG_HOME/i3/config if set) or
-# ~/.i3/config.
-#
-# Please remove the following exec line:
-#######################################################################
 
 ## Launch Polybar with random wallpaper 
 exec_always --no-startup-id bash ~/.config/polybar/material/scripts/pywal.sh ~/.config/i3/wallpappers 
 exec_always --no-startup-id bash ~/.config/polybar/launch.sh --material
 
 # Desktop wallpapper
-exec_always --no-startup-id bash nitrogen --random --set-zoom-fill ~/.config/i3/wallpappers
+#exec_always --no-startup-id bash nitrogen --random --set-zoom-fill ~/.config/i3/wallpappers
 
 # Remove window title
 for_window [class="^.*"] border pixel 2 
+iource /usr/share/zsh-theme-powerlevel10k/powerlevel10k.zsh-theme

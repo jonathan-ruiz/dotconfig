@@ -87,6 +87,7 @@ sudo pacman -Sy --noconfirm \
     pasystray \
     pavucontrol \
     pulseaudio-bluetooth \
+    flameshot \
     rsync \
     lsd \
     xorg-xdpyinfo \
