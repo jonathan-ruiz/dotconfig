@@ -1,11 +1,87 @@
 #!/bin/bash
 
-# Function to install Firefox
-install_extra() {
-    echo -e "\e[1;32m\nInstalling extra...\e[0m"
-    packages=("firefox" "gimp" "blender" "virtualbox" "neovim" "obs-studio")
+base_pacman_packages=(
+    "firefox"     
+    "neovim"
+    "udev"
+    # File browser
+    "thunar"
+    # Audio system
+    "pulseaudio"
+    "pasystray"
+    "pavucontrol"
+    "pulseaudio-bluetooth"
+    "alsa-utils"
+    # Screenshots
+    "flameshot"    
+    # System tools
+    "rsync"
+    "xorg-xdpyinfo"
+    "blueman"
+    "acpi"
+    "upower"
+    "ttf-nerd-fonts-symbols-mono"
+    # Terminal
+    "lsd" 
+    "kitty"
+    "zsh"
+    # Window manager 
+    "redshift"
+    "rofi"    
+    "python-pywal"
+    "calc"
+    "i3"
+    "polybar"
+    "network-manager-applet"
+)
 
-    for pkg in "${packages[@]}"; do
+extra_pacman_packages=(    
+    # Graphic design tools
+    "gimp" 
+    "blender" 
+    # Virtualization
+    "virtualbox"    
+    # Screen capturing 
+    "obs-studio"     
+    # Thunar extras
+    "gvfs" 
+    "thunar-archive-plugin" 
+    "thunar-media-tags-plugin" 
+    "thunar-shares-plugin" 
+    "thunar-volman" 
+    "ffmpegthumbnailer" 
+    "tumbler" 
+    "libgsf" 
+    "gvfs-mtp" 
+    "gvfs-smb" 
+    "sshfs" 
+    "catfish" 
+    # udev extras
+    "game-devices-udev" 
+    "game-devices-udev" 
+    # Editors
+    "code"
+)
+
+base_aur_packages=(
+    "jetbrains-toolbox" 
+    "unityhub"     
+)
+
+extra_aur_packages=(    
+    # Thunar extras
+    "raw-thumbnailer" 
+    "tumbler-extra-thumbnailers" 
+    "tumbler-stl-thumbnailer" 
+    "webp-pixbuf-loader"
+)
+
+
+install_packages() {
+    echo -e "\e[1;32m\nInstalling extra...\e[0m"
+
+    # Loop through the arguments passed to the function
+    for pkg in "$@"; do
         if pacman -Q "$pkg" &>/dev/null; then
             echo "$pkg is already installed."
         else
@@ -15,14 +91,23 @@ install_extra() {
                 exit 1
             fi
         fi
+    done   
+}
+
+install_aur_packages() {
+    echo -e "\e[1;32m\nInstalling AUR packages...\e[0m"
+
+    # Loop through the arguments passed to the function
+    for package_name in "$@"; do
+        local temp_dir="$(mktemp -d)"
+        echo -e "\e[1;32m\nInstalling $package_name AUR package...\e[0m"
+        trap cleanup EXIT
+        git clone "https://aur.archlinux.org/$package_name.git" "$temp_dir" || { echo -e "\e[1;31mError: Failed to clone AUR repository for $package_name.\e[0m"; exit 1; }
+        cd "$temp_dir" || { echo -e "\e[1;31mError: AUR directory for $package_name not found.\e[0m"; exit 1; }
+        makepkg -s -r -c --noconfirm || { echo -e "\e[1;31mError: Failed to build AUR package for $package_name.\e[0m"; exit 1; }
+        sudo pacman -U --noconfirm "$package_name"*.tar.xz || { echo -e "\e[1;31mError: Failed to install AUR package $package_name.\e[0m"; exit 1; }
+        echo -e "\e[1;32mInstallation of $package_name completed successfully.\e[0m"
     done
-
-    # Install jetbrains-toolbox
-    install_aur_package "jetbrains-toolbox"
-
-    # Install unityhub
-    install_aur_package "unityhub"
-
 }
 
 # Function to clean up temporary directories
@@ -33,19 +118,7 @@ cleanup() {
     fi
 }
 
-# Function to install AUR packages
-install_aur_package() {
-    local package_name="$1"
-    local temp_dir="$(mktemp -d)"
-    echo -e "\e[1;32m\nInstalling $package_name AUR package...\e[0m"
-    trap cleanup EXIT
-    git clone "https://aur.archlinux.org/$package_name.git" "$temp_dir" || { echo -e "\e[1;31mError: Failed to clone AUR repository for $package_name.\e[0m"; exit 1; }
-    cd "$temp_dir" || { echo -e "\e[1;31mError: AUR directory for $package_name not found.\e[0m"; exit 1; }
-    makepkg -s -r -c || { echo -e "\e[1;31mError: Failed to build AUR package for $package_name.\e[0m"; exit 1; }
-    sudo pacman -U --noconfirm "$package_name"*.tar.xz || { echo -e "\e[1;31mError: Failed to install AUR package $package_name.\e[0m"; exit 1; }
-    echo -e "\e[1;32mInstallation of $package_name completed successfully.\e[0m"
-}
-# ASCII art and instructions
+# Script start
 echo -e "\e[1;34m"
 cat << "EOF"
       _._     _,-'""`-._
@@ -82,30 +155,8 @@ fi
 
 # Install required packages
 echo -e "\e[1;32m\nInstalling necessary packages...\e[0m"
-sudo pacman -Sy --noconfirm \
-    pulseaudio \
-    pasystray \
-    pavucontrol \
-    pulseaudio-bluetooth \
-    flameshot \
-    rsync \
-    lsd \
-    xorg-xdpyinfo \
-    redshift \
-    rofi \
-    python-pywal \
-    calc \
-    kitty \
-    zsh \
-    i3 \
-    polybar \
-    network-manager-applet \
-    blueman \
-    alsa-utils \
-    acpi \
-    upower \
-    ttf-nerd-fonts-symbols-mono 
-    
+install_packages $base_pacman_packages
+install_aur_packages $base_aur_packages
 
 # Check if installation was successful
 if [ $? -ne 0 ]; then
@@ -123,7 +174,7 @@ echo -e "\e[1;32mPowerlevel10k installed and configured.\e[0m"
 # Prompt user if they want to install browsing-related packages
 read -p "Do you want to install extra packages? (y/n): " choice
 case "$choice" in 
-  y|Y ) install_extra;;
+  y|Y ) install_packages $extra_pacman_packages && install_aur_packages $extra_aur_packages;;
   n|N ) echo -e "\e[1;32m\nNo extra packages will be installed.\e[0m";;
   * ) echo -e "\e[1;31mInvalid choice. No extra packages will be installed.\e[0m";;
 esac
