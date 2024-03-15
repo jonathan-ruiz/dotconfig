@@ -3,7 +3,6 @@
 base_pacman_packages=(
     "firefox"     
     "neovim"
-    "udev"
     # File browser
     "thunar"
     # Audio system
@@ -15,6 +14,9 @@ base_pacman_packages=(
     # Screenshots
     "flameshot"    
     # System tools
+    "polkit"
+    "udev"
+    "udisks2"
     "rsync"
     "xorg-xdpyinfo"
     "blueman"
