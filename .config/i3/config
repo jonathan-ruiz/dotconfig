@@ -214,4 +214,3 @@ exec_always --no-startup-id bash ~/.config/polybar/launch.sh --material
 
 # Remove window title
 for_window [class="^.*"] border pixel 2 
-iource /usr/share/zsh-theme-powerlevel10k/powerlevel10k.zsh-theme
