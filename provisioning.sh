@@ -1,8 +1,7 @@
 #!/bin/bash
 
 base_pacman_packages=(
-    "firefox"     
-    "neovim"
+    "firefox"
     # File browser
     "thunar"
     # Audio system
@@ -14,6 +13,16 @@ base_pacman_packages=(
     # Screenshots
     "flameshot"    
     # System tools
+    "git"
+    "base-devel"
+    "neovim"
+    "bluez"
+    "bluez-utils"
+    "xorg-server"
+    "lightdm"
+    "lightdm-gtk-greeter"
+    "networkmanager"
+    "fuse2"
     "polkit"
     "udev"
     "udisks2"
@@ -28,6 +37,8 @@ base_pacman_packages=(
     "kitty"
     "zsh"
     # Window manager 
+    "dmenu"
+    "cbatticon"
     "redshift"
     "rofi"    
     "python-pywal"
@@ -35,6 +46,7 @@ base_pacman_packages=(
     "i3"
     "polybar"
     "network-manager-applet"
+    "gxkb"
 )
 
 extra_pacman_packages=(    
@@ -48,8 +60,7 @@ extra_pacman_packages=(
     # Thunar extras
     "gvfs" 
     "thunar-archive-plugin" 
-    "thunar-media-tags-plugin" 
-    "thunar-shares-plugin" 
+    "thunar-media-tags-plugin"
     "thunar-volman" 
     "ffmpegthumbnailer" 
     "tumbler" 
@@ -57,37 +68,41 @@ extra_pacman_packages=(
     "gvfs-mtp" 
     "gvfs-smb" 
     "sshfs" 
-    "catfish" 
-    # udev extras
-    "game-devices-udev" 
-    "game-devices-udev" 
+    "catfish"
     # Editors
     "code"
 )
 
 base_aur_packages=(
-    "jetbrains-toolbox" 
-    "unityhub"     
+    "yay"
+	  #"teams" # It's easier to install using edge and add app button
+    "microsoft-edge-stable-bin"
+    "jetbrains-toolbox" # Needed to download and rewrite executable
+    "unityhub"
+    #"mons"
 )
 
 extra_aur_packages=(    
     # Thunar extras
+    "thunar-shares-plugin"
     "raw-thumbnailer" 
     "tumbler-extra-thumbnailers" 
     "tumbler-stl-thumbnailer" 
     "webp-pixbuf-loader"
+    # udev extras
+    "game-devices-udev"
 )
 
 
 install_packages() {
-    echo -e "\e[1;32m\nInstalling extra...\e[0m"
+    echo -e "\e[1;32m\nInstalling pacman packages...\e[0m"
 
     # Loop through the arguments passed to the function
     for pkg in "$@"; do
         if pacman -Q "$pkg" &>/dev/null; then
-            echo "$pkg is already installed."
+            echo -e "\e[1;33m$pkg is already installed.\e[0m"
         else
-            sudo pacman -Sy --noconfirm "$pkg"
+            sudo pacman -Sy --noconfirm --needed "$pkg"
             if [ $? -ne 0 ]; then
                 echo -e "\e[1;31mError: Failed to install $pkg.\e[0m"
                 exit 1
@@ -100,15 +115,19 @@ install_aur_packages() {
     echo -e "\e[1;32m\nInstalling AUR packages...\e[0m"
 
     # Loop through the arguments passed to the function
-    for package_name in "$@"; do
-        local temp_dir="$(mktemp -d)"
-        echo -e "\e[1;32m\nInstalling $package_name AUR package...\e[0m"
-        trap cleanup EXIT
-        git clone "https://aur.archlinux.org/$package_name.git" "$temp_dir" || { echo -e "\e[1;31mError: Failed to clone AUR repository for $package_name.\e[0m"; exit 1; }
-        cd "$temp_dir" || { echo -e "\e[1;31mError: AUR directory for $package_name not found.\e[0m"; exit 1; }
-        makepkg -s -r -c --noconfirm || { echo -e "\e[1;31mError: Failed to build AUR package for $package_name.\e[0m"; exit 1; }
-        sudo pacman -U --noconfirm "$package_name"*.tar.xz || { echo -e "\e[1;31mError: Failed to install AUR package $package_name.\e[0m"; exit 1; }
-        echo -e "\e[1;32mInstallation of $package_name completed successfully.\e[0m"
+    for package_name in "$@"; do       
+        local temp_dir=$package_name
+        # Check if package is already installed
+        if pacman -Qq "$package_name" &>/dev/null; then
+            echo -e "\e[1;33m\n$package_name is already installed. Skipping...\e[0m"
+        else
+            echo -e "\e[1;32m\nInstalling $package_name AUR package...\e[0m"
+            trap cleanup EXIT
+            git clone https://aur.archlinux.org/${package_name}.git
+            cd $package_name
+            makepkg -si --noconfirm
+            echo -e "\e[1;32mInstallation of $package_name completed successfully.\e[0m"
+        fi
     done
 }
 
@@ -157,8 +176,8 @@ fi
 
 # Install required packages
 echo -e "\e[1;32m\nInstalling necessary packages...\e[0m"
-install_packages $base_pacman_packages
-install_aur_packages $base_aur_packages
+install_packages ${base_pacman_packages[@]}
+install_aur_packages ${base_aur_packages[@]}
 
 # Check if installation was successful
 if [ $? -ne 0 ]; then
@@ -167,16 +186,21 @@ if [ $? -ne 0 ]; then
 fi
 
 # Install and configure powerlevel10k
-echo -e "\e[1;32m\nInstalling and configuring powerlevel10k...\e[0m"
-sudo pacman -R --noconfirm zsh-theme-powerlevel10k 
-yay -S --noconfirm zsh-theme-powerlevel10k-git
-echo 'source /usr/share/zsh-theme-powerlevel10k/powerlevel10k.zsh-theme' >> ~/.zshrc
-echo -e "\e[1;32mPowerlevel10k installed and configured.\e[0m"
+if [ -f ~/.p10k.zsh ]; then
+    echo -e "\e[1;33mPowerlevel10k is already installed. Skipping installation.\e[0m"
+else
+    # Install and configure powerlevel10k
+    echo -e "\e[1;32m\nInstalling and configuring powerlevel10k...\e[0m"
+    sudo pacman -R --noconfirm zsh-theme-powerlevel10k
+    yay -S --noconfirm zsh-theme-powerlevel10k-git
+    echo 'source /usr/share/zsh-theme-powerlevel10k/powerlevel10k.zsh-theme' >> ~/.zshrc
+    echo -e "\e[1;32mPowerlevel10k installed and configured.\e[0m"
+fi
 
 # Prompt user if they want to install browsing-related packages
 read -p "Do you want to install extra packages? (y/n): " choice
 case "$choice" in 
-  y|Y ) install_packages $extra_pacman_packages && install_aur_packages $extra_aur_packages;;
+  y|Y ) install_packages ${extra_pacman_packages[@]} && install_aur_packages ${extra_aur_packages[@]};;
   n|N ) echo -e "\e[1;32m\nNo extra packages will be installed.\e[0m";;
   * ) echo -e "\e[1;31mInvalid choice. No extra packages will be installed.\e[0m";;
 esac
