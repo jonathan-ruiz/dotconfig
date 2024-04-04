@@ -1,63 +1,103 @@
 #!/bin/bash
 
-base_pacman_packages=(
-    "firefox"
-    # File browser
-    "thunar"
-    # Audio system
-    "pulseaudio"
-    "pasystray"
-    "pavucontrol"
-    "pulseaudio-bluetooth"
-    "alsa-utils"
-    # Screenshots
-    "flameshot"    
-    # System tools
-    "git"
-    "base-devel"
-    "neovim"
-    "bluez"
-    "bluez-utils"
-    "xorg-server"
-    "lightdm"
-    "lightdm-gtk-greeter"
-    "networkmanager"
-    "fuse2"
-    "polkit"
-    "udev"
-    "udisks2"
-    "rsync"
-    "xorg-xdpyinfo"
-    "blueman"
-    "acpi"
-    "upower"
-    "ttf-nerd-fonts-symbols-mono"
-    # Terminal
-    "lsd" 
-    "kitty"
-    "zsh"
-    # Window manager 
-    "dmenu"
-    "cbatticon"
-    "redshift"
-    "rofi"    
-    "python-pywal"
-    "calc"
-    "i3"
-    "polybar"
-    "network-manager-applet"
-    "gxkb"
+# Check if the script was run with the '-y' or '--yes' option
+if [[ $1 == '-y' || $1 == '--yes' ]]; then
+    auto_confirm=true
+else
+    auto_confirm=false
+fi
+
+
+devops_pacman_packages=(
+  "docker"
+  "docker-compose"
+  "sops"
+  "remmina"
+  "freerdp"
+  "terraform"
+)
+devops_aur_packages=(
 )
 
-extra_pacman_packages=(    
-    # Graphic design tools
-    "gimp" 
-    "blender" 
-    # Virtualization
-    "virtualbox"    
-    # Screen capturing 
-    "obs-studio"     
-    # Thunar extras
+art_pacman_packages=(
+  "gimp"
+  "blender"
+  "inkscape"
+  "unityhub"
+)
+art_aur_packages=(
+)
+
+communications_pacman_packages=(
+  "discord"
+  "telegram-desktop"
+  #"teams" # It's easier to install using edge and add app button
+  "microsoft-edge-stable-bin"
+)
+communications_aur_packages=(
+  "slack-desktop"
+  "zoom"
+)
+
+coding_pacman_packages=(
+  "code"
+)
+coding_aur_packages=(
+  "jetbrains-toolbox" # Needed to download and rewrite executable
+)
+
+base_pacman_packages=(
+  "firefox"
+  # Audio system
+  "pulseaudio"
+  "pasystray"
+  "pavucontrol"
+  "pulseaudio-bluetooth"
+  "alsa-utils"
+  # Screenshots
+  "flameshot"
+  # System tools
+  "git"
+  "base-devel"
+  "neovim"
+  "bluez"
+  "bluez-utils"
+  "xorg-server"
+  "lightdm"
+  "lightdm-gtk-greeter"
+  "networkmanager"
+  "fuse2"
+  "polkit"
+  "udev"
+  "udisks2"
+  "rsync"
+  "xorg-xdpyinfo"
+  "blueman"
+  "acpi"
+  "upower"
+  "ttf-nerd-fonts-symbols-mono"
+  # Terminal
+  "lsd"
+  "kitty"
+  "zsh"
+  # Window manager
+  "dmenu"
+  "cbatticon"
+  "redshift"
+  "rofi"
+  "python-pywal"
+  "calc"
+  "i3"
+  "polybar"
+  "network-manager-applet"
+  "gxkb"
+)
+
+extra_pacman_packages=(
+    "virtualbox"
+    "obs-studio"
+    # Thunar
+    "thunar"
     "gvfs" 
     "thunar-archive-plugin" 
     "thunar-media-tags-plugin"
@@ -69,16 +109,10 @@ extra_pacman_packages=(
     "gvfs-smb" 
     "sshfs" 
     "catfish"
-    # Editors
-    "code"
 )
 
 base_aur_packages=(
     "yay"
-	  #"teams" # It's easier to install using edge and add app button
-    "microsoft-edge-stable-bin"
-    "jetbrains-toolbox" # Needed to download and rewrite executable
-    "unityhub"
     #"mons"
 )
 
@@ -129,6 +163,23 @@ install_aur_packages() {
             echo -e "\e[1;32mInstallation of $package_name completed successfully.\e[0m"
         fi
     done
+}
+
+prompt_install_packages() {
+    local title=$1
+    local pacman_packages=("${!2}")
+    local aur_packages=("${!3}")
+    echo -e "\e[1;34m$title\e[0m"
+    if [ "$auto_confirm" = true ]; then
+        choice='y'
+    else
+        read -p "Do you want to install these packages? (y/n): " choice
+    fi
+    case "$choice" in
+        y|Y ) install_packages "${pacman_packages[@]}" && install_aur_packages "${aur_packages[@]}";;
+        n|N ) echo -e "\e[1;32m\nNo packages will be installed.\e[0m";;
+        * ) echo -e "\e[1;31mInvalid choice. No packages will be installed.\e[0m";;
+    esac
 }
 
 # Function to clean up temporary directories
@@ -185,6 +236,13 @@ if [ $? -ne 0 ]; then
     exit 1
 fi
 
+# Call the function for each package list
+prompt_install_packages "Extra Packages" extra_pacman_packages[@] extra_aur_packages[@]
+prompt_install_packages "DevOps Packages" devops_pacman_packages[@] devops_aur_packages[@]
+prompt_install_packages "Art Packages" art_pacman_packages[@] art_aur_packages[@]
+prompt_install_packages "Communications Packages" communications_pacman_packages[@] communications_aur_packages[@]
+prompt_install_packages "Coding Packages" coding_pacman_packages[@] coding_aur_packages[@]
+
 # Install and configure powerlevel10k
 if [ -f ~/.p10k.zsh ]; then
     echo -e "\e[1;33mPowerlevel10k is already installed. Skipping installation.\e[0m"
@@ -197,13 +255,28 @@ else
     echo -e "\e[1;32mPowerlevel10k installed and configured.\e[0m"
 fi
 
-# Prompt user if they want to install browsing-related packages
-read -p "Do you want to install extra packages? (y/n): " choice
-case "$choice" in 
-  y|Y ) install_packages ${extra_pacman_packages[@]} && install_aur_packages ${extra_aur_packages[@]};;
-  n|N ) echo -e "\e[1;32m\nNo extra packages will be installed.\e[0m";;
-  * ) echo -e "\e[1;31mInvalid choice. No extra packages will be installed.\e[0m";;
-esac
+## Prompt user if they want to install browsing-related packages
+#read -p "Do you want to install extra packages? (y/n): " choice
+#case "$choice" in
+#  y|Y ) install_packages ${extra_pacman_packages[@]} && install_aur_packages ${extra_aur_packages[@]};;
+#  n|N ) echo -e "\e[1;32m\nNo extra packages will be installed.\e[0m";;
+#  * ) echo -e "\e[1;31mInvalid choice. No extra packages will be installed.\e[0m";;
+#esac
 
 echo -e "\e[1;32m\nPackages installed successfully!\e[0m"
+cat << "EOF"
+                 ____
+                /____ `\
+               ||_  _`\ \
+         .-.   `|O, O  ||
+         | |    (/    -)\
+         | |    |`-'` |\`
+      __/  |    | _/  |
+     (___) \.  _.\__. `\___
+     (___)  )\/  \    _/  ~\.
+     (___) . \   `--  _   `\
+      (__)-    ,/        (   |
+           `--~|         |   |
+               |         |   |
+EOF
 exit 0
