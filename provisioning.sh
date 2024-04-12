@@ -15,6 +15,7 @@ devops_pacman_packages=(
   "remmina"
   "freerdp"
   "terraform"
+  "vagrant"
 )
 devops_aur_packages=(
 )
@@ -48,6 +49,7 @@ coding_aur_packages=(
 
 base_pacman_packages=(
   "firefox"
+  "zip"
   # Audio system
   "pulseaudio"
   "pasystray"
@@ -57,6 +59,8 @@ base_pacman_packages=(
   # Screenshots
   "flameshot"
   # System tools
+  "less" # Git log pagination :O
+  "vlc"
   "git"
   "base-devel"
   "neovim"
@@ -112,6 +116,7 @@ extra_pacman_packages=(
 )
 
 base_aur_packages=(
+    "mongodb-compass"
     "yay"
     #"mons"
 )
