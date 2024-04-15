@@ -7,9 +7,36 @@ else
     auto_confirm=false
 fi
 
+game_development_pacman_packages=(
+  "unityhub"
+)
+game_development_aur_packages=(
+  # Add more productivity tools here
+)
+
+entertainment_pacman_packages=(
+  # Add more entertainment software here
+  "steam"
+)
+entertainment_aur_packages=(
+  # Add more entertainment software here
+)
+
+security_pacman_packages=(
+  # Add more security tools here
+)
+security_aur_packages=(
+  # Add more security tools here
+)
+
+development_pacman_packages=(
+  # Add more development tools here
+)
+development_aur_packages=(
+  # Add more development tools here
+)
 
 devops_pacman_packages=(
-  "docker"
   "docker-compose"
   "sops"
   "remmina"
@@ -24,7 +51,6 @@ art_pacman_packages=(
   "gimp"
   "blender"
   "inkscape"
-  "unityhub"
 )
 art_aur_packages=(
 )
@@ -48,6 +74,7 @@ coding_aur_packages=(
 )
 
 base_pacman_packages=(
+  "docker"
   "firefox"
   "zip"
   # Audio system
@@ -247,6 +274,10 @@ prompt_install_packages "DevOps Packages" devops_pacman_packages[@] devops_aur_p
 prompt_install_packages "Art Packages" art_pacman_packages[@] art_aur_packages[@]
 prompt_install_packages "Communications Packages" communications_pacman_packages[@] communications_aur_packages[@]
 prompt_install_packages "Coding Packages" coding_pacman_packages[@] coding_aur_packages[@]
+prompt_install_packages "Game Development Packages" game_development_pacman_packages[@] game_development_aur_packages[@]
+prompt_install_packages "Entertainment Packages" entertainment_pacman_packages[@] entertainment_aur_packages[@]
+prompt_install_packages "Security Packages" security_pacman_packages[@] security_aur_packages[@]
+prompt_install_packages "Development Tools" development_pacman_packages[@] development_aur_packages[@]
 
 # Install and configure powerlevel10k
 if [ -f ~/.p10k.zsh ]; then
