@@ -2,12 +2,17 @@
 
 # Logging function
 log() {
-    echo "[$(date +'%Y-%m-%d %H:%M:%S')] $1"
+    echo "[$(date +'%Y-%m-%d %H:%M:%S')] $1" >> script.log
 }
 
 # Sync dotfiles to home directory using rsync
 log "Syncing dotfiles to home directory..."
-rsync -av --exclude={'provisioning.sh','install.sh'} ./ ~/
+rsync -av --exclude='*' --include={'.fonts', '.icons', '.config', '.scripts', '.gitconfig', '.profile', '.zshrc', '.p10k.zsh'} ./ ~/
+
+# Sync etc files
+log "Syncing etc/ files..."
+rsync -av etc/ /etc/
+
 if [ $? -eq 0 ]; then
     log "Dotfiles synced successfully!"
 else
@@ -42,22 +47,21 @@ else
     log "Docker not found, skipping configuration."
 fi
 
-
-if [ $? -ne 0 ]; then
-    log "Error: Failed to activate group changes for Docker."
-    exit 1
-fi
-
 # Install azure-cli through docker
 log "Installing azure-cli (az)"
-# Using alias for this breaks third party tools like sops, it use az but wont import the aliases
 az_content="#!/bin/bash
 docker run -v ~/.azure:/root/.azure -v /home/jruiz/.ssh:/root/.ssh mcr.microsoft.com/azure-cli az \"\$@\"
 "
 # Write the content to a file named 'az'
-echo "$az_content" > /usr/bin/az
+echo "$az_content" > /usr/local/bin/az
 # Make the file executable
-chmod +x /usr/bin/az
+chmod +x /usr/local/bin/az
 
-log "Installation completed successfully!"
+if [ $? -eq 0 ]; then
+    log "Installation completed successfully!"
+else
+    log "Error: Failed to install azure-cli."
+    exit 1
+fi
+
 
