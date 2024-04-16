@@ -1,0 +1,5 @@
+[user]
+	email = jonathan.ruiz@nexxyo.com
+	name = Jonathan Ruiz
+[core]
+	sshCommand = ssh -i ~/.ssh/id_nexxyo

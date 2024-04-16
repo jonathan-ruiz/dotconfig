@@ -1,11 +1,13 @@
 [user]
 	email = jonathan.ruiz3@gmail.com
 	name = Jonathan Ruiz
+[core]
+	sshCommand = ssh -i ~/.ssh/id_rsa
 
 [includeIf "gitdir:~/Projects/Nexxyolabs/"]
-
-[user]
-	email = jonathan.ruiz@nexxyo.com
-	name = Jonathan Ruiz
-[core]
-	sshCommand = ssh -i ~/.ssh/id_nexxyo
+	path=~/.gitconfig.nexxyolabs
+#[user]
+#	email = jonathan.ruiz@nexxyo.com
+#	name = Jonathan Ruiz
+#[core]
+#	sshCommand = ssh -i ~/.ssh/id_nexxyo
