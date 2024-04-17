@@ -85,6 +85,15 @@ cleanup() {
     fi
 }
 
+# Get the directory where this script is located
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+
+# Change to the directory of the script
+cd "$SCRIPT_DIR" || exit
+
+# Source the packages configuration file
+source packages.conf
+
 # Main script starts here
 print_message "" "Welcome to the Dotfiles Provisioning Script!"
 print_message "" "This script will install necessary packages and configure powerlevel10k."
