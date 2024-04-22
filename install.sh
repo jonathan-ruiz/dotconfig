@@ -73,6 +73,18 @@ else
     log "${RED}Docker not found, skipping configuration.${NC}"
 fi
 
+# Plastic on docker alias command
+ALIAS_COMMAND="alias plasticgui='docker run --privileged --network host --rm -it -v \$HOME/Projects:/root/Projects -v ~/.plastic4:/root/.plastic4 -v /tmp/.X11-unix:/tmp/.X11-unix -e XAUTH_TOKEN=\"\$(xauth list)\" -e DISPLAY=:0 jonathanruiz3/plasticscm-client sh -c \"xauth add \$XAUTH_TOKEN && plasticgui\"'"
+
+# Check if .zshrc already contains the alias
+if ! grep -qF "$ALIAS_COMMAND" ~/.zshrc; then
+    # If not, append it to .zshrc
+    echo "$ALIAS_COMMAND" >> ~/.zshrc
+    echo "Alias added to .zshrc"
+else
+    echo "Alias already exists in .zshrc"
+fi
+
 # Install azure-cli through docker
 log "${GREEN}Installing azure-cli (az)...${NC}"
 az_content="#!/bin/bash
