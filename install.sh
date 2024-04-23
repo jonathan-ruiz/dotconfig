@@ -50,25 +50,40 @@ cat << "EOF"
                                      
 EOF
 
+#!/bin/bash
+
+# Check if the multilib repositories are already enabled or commented out
+if ! grep -q "^\[multilib\]" /etc/pacman.conf; then
+    # Multilib repository is not present, so add it
+    sudo echo "[multilib]" >> /etc/pacman.conf
+    sudo echo "Include = /etc/pacman.d/mirrorlist" >> /etc/pacman.conf
+    sudo echo "Added multilib repository"
+else
+    sudo echo "Multilib repositories are already enabled"
+fi
+
+# Synchronize package databases
+sudo pacman -Sy
+
+
 # Call provisioning script and pass arguments
 log "${GREEN}Running provisioning script...${NC}"
-#./home/.scripts/provisioning.sh "$@" || handle_error "Provisioning script failed" "main"
-
+./home/.scripts/provisioning.sh "$@" || handle_error "Provisioning script failed" "main"
 log "${GREEN}Provisioning script completed.${NC}"
 
 # Sync dotfiles to home directory using rsync
 log "${GREEN}Syncing dotfiles to home directory...${NC}"
-#rsync -av ./home/ ~/ || handle_error "Dotfiles sync failed" "main"
+rsync -av ./home/ ~/ || handle_error "Dotfiles sync failed" "main"
 log "${GREEN}Dotfiles synced successfully!${NC}"
 
 # Sync etc files
 log "${GREEN}Syncing etc/ files...${NC}"
-#sudo rsync -av etc/ /etc/ || handle_error "etc/ files sync failed" "main"
+sudo rsync -av etc/ /etc/ || handle_error "etc/ files sync failed" "main"
 log "${GREEN}etc/ files synced successfully!${NC}"
 
 # Set zsh as default shell
 log "${GREEN}Setting zsh as default shell...${NC}"
-#chsh -s "$(command -v zsh)" || handle_error "Failed to set zsh as default shell" "main"
+chsh -s "$(command -v zsh)" || handle_error "Failed to set zsh as default shell" "main"
 log "${GREEN}Zsh set as default shell successfully!${NC}"
 
 # Configure Docker if present
@@ -88,7 +103,6 @@ else
 fi
 
 
-echo "Alias"
 # Add aliases to .zshrc
 add_alias_to_zshrc "alias plasticgui='docker run --privileged --network host --rm -it -v \$HOME/Projects:/root/Projects -v ~/.plastic4:/root/.plastic4 -v /tmp/.X11-unix:/tmp/.X11-unix -e XAUTH_TOKEN=\"\$(xauth list)\" -e DISPLAY=:0 jonathanruiz3/plasticscm-client sh -c \"xauth add \$XAUTH_TOKEN && plasticgui\"'"
 add_alias_to_zshrc "alias icat=\"kitten icat\""
