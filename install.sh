@@ -50,8 +50,6 @@ cat << "EOF"
                                      
 EOF
 
-#!/bin/bash
-
 # Check if the multilib repositories are already enabled or commented out
 if ! grep -q "^\[multilib\]" /etc/pacman.conf; then
     # Multilib repository is not present, so add it
@@ -62,9 +60,16 @@ else
     sudo echo "Multilib repositories are already enabled"
 fi
 
+# Add current user to the 'video' group
+sudo usermod -aG video "$USER" || handle_error "Failed to add user to video group" "main"
+
+# Change group of the file /sys/class/backlight/intel_backlight/brightness to 'video' and give group write access
+sudo chgrp video /sys/class/backlight/intel_backlight/brightness || handle_error "Failed to change group of brightness file" "main"
+sudo chmod g+w /sys/class/backlight/intel_backlight/brightness || handle_error "Failed to give group write access to brightness file" "main"
+
+
 # Synchronize package databases
 sudo pacman -Sy
-
 
 # Call provisioning script and pass arguments
 log "${GREEN}Running provisioning script...${NC}"
