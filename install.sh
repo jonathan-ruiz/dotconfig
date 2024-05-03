@@ -63,9 +63,15 @@ fi
 # Add current user to the 'video' group
 sudo usermod -aG video "$USER" || handle_error "Failed to add user to video group" "main"
 
-# Change group of the file /sys/class/backlight/intel_backlight/brightness to 'video' and give group write access
-sudo chgrp video /sys/class/backlight/intel_backlight/brightness || handle_error "Failed to change group of brightness file" "main"
-sudo chmod g+w /sys/class/backlight/intel_backlight/brightness || handle_error "Failed to give group write access to brightness file" "main"
+
+# Check if the file exists
+if [ -e "/sys/class/backlight/intel_backlight/brightness" ]; then
+    # Change group of the file /sys/class/backlight/intel_backlight/brightness to 'video' and give group write access
+    sudo chgrp video /sys/class/backlight/intel_backlight/brightness || handle_error "Failed to change group of brightness file" "main"
+    sudo chmod g+w /sys/class/backlight/intel_backlight/brightness || handle_error "Failed to give group write access to brightness file" "main"
+else
+    echo "File '/sys/class/backlight/intel_backlight/brightness' does not exist. Skipping group and permission changes."
+fi
 
 
 # Synchronize package databases
@@ -109,7 +115,7 @@ fi
 
 
 # Add aliases to .zshrc
-add_alias_to_zshrc "alias plasticgui='docker run --privileged --network host --rm -it -v \$HOME/Projects:/root/Projects -v ~/.plastic4:/root/.plastic4 -v /tmp/.X11-unix:/tmp/.X11-unix -e XAUTH_TOKEN=\"\$(xauth list)\" -e DISPLAY=:0 jonathanruiz3/plasticscm-client sh -c \"xauth add \$XAUTH_TOKEN && plasticgui\"'"
+add_alias_to_zshrc "alias plasticgui='docker run --privileged --network host --rm -it -v \$HOME/Projects:/root/Projects -v ~/.plastic4:/root/.plastic4 -v $HOME/.Xauthority:/root/.Xauthority -v /tmp/.X11-unix:/tmp/.X11-unix -e DISPLAY=$DISPLAY jonathanruiz3/plasticscm-client sh -c \"plasticgui\"'"
 add_alias_to_zshrc "alias icat=\"kitten icat\""
 add_alias_to_zshrc "alias ls=lsd"
 add_alias_to_zshrc "alias ssh='kitty +kitten ssh'"
