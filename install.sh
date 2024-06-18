@@ -77,6 +77,9 @@ fi
 # Synchronize package databases
 sudo pacman -Sy
 
+systemctl enable bluetooth
+systemctl start bluetoothd
+
 # Call provisioning script and pass arguments
 log "${GREEN}Running provisioning script...${NC}"
 ./home/.scripts/provisioning.sh "$@" || handle_error "Provisioning script failed" "main"
@@ -115,7 +118,7 @@ fi
 
 
 # Add aliases to .zshrc
-add_alias_to_zshrc "alias plasticgui='docker run --privileged --network host --rm -it -v $HOME/Projects:/Projects -v ~/.plastic4:$HOME/.plastic4 -v ~/.Xauthority:$HOME/.Xauthority -v /tmp/.X11-unix:/tmp/.X11-unix -e DISPLAY=:0 --user $(id -u):$(id -g) --workdir="$HOME" --volume=\"/etc/group:/etc/group:ro\" --volume=\"/etc/passwd:/etc/passwd:ro\" --volume=\"/etc/shadow:/etc/shadow:ro\" jonathanruiz3/plasticscm-client sh -c \"plasticgui\"'"
+add_alias_to_zshrc "alias plasticgui='docker run --privileged --network host --rm -it -v $HOME/Projects:/Projects -v ~/.plastic4:$HOME/.plastic4 -v ~/.Xauthority:$HOME/.Xauthority -v /tmp/.X11-unix:/tmp/.X11-unix -e DISPLAY=$DISPLAY --user $(id -u):$(id -g) --workdir="$HOME" --volume=\"/etc/group:/etc/group:ro\" --volume=\"/etc/passwd:/etc/passwd:ro\" --volume=\"/etc/shadow:/etc/shadow:ro\" jonathanruiz3/plasticscm-client sh -c \"plasticgui\"'"
 add_alias_to_zshrc "alias icat=\"kitten icat\""
 add_alias_to_zshrc "alias ls=lsd"
 add_alias_to_zshrc "alias ssh='kitty +kitten ssh'"
