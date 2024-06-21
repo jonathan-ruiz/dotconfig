@@ -151,10 +151,14 @@ exec thunar --daemon
 # Remove window title
 for_window [class="^.*"] border pixel 2
 
+# Force firefox notifications to appear as floating windows
+for_window [window_role="alert"] floating enable
+no_focus [window_role="alert"]
+
 gaps inner 4px
 gaps outer 2px
 smart_gaps on
 
 # Config keyboard
-exec "setxkbmap -layout gb,es"
-exec "setxkbmap -option 'grp:alt_shift_toggle'"
+#exec "setxkbmap -layout gb,es"
+#exec "setxkbmap -option 'grp:alt_shift_toggle'"
