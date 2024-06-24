@@ -77,8 +77,13 @@ fi
 # Synchronize package databases
 sudo pacman -Sy
 
+# Bluetooth
 systemctl enable bluetooth
 systemctl start bluetoothd
+
+# Network Manager
+systemctl enable NetworkManager
+systemctl start NetworkManager
 
 # Call provisioning script and pass arguments
 log "${GREEN}Running provisioning script...${NC}"

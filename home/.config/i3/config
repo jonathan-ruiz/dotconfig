@@ -160,5 +160,6 @@ gaps outer 2px
 smart_gaps on
 
 # Config keyboard
+exec_always --no-startup-id ibus-daemon -rxRd
 #exec "setxkbmap -layout gb,es"
 #exec "setxkbmap -option 'grp:alt_shift_toggle'"
